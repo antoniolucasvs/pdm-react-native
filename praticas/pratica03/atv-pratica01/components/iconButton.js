@@ -1,7 +1,5 @@
 import { Pressable, Text, StyleSheet, View } from "react-native";
-import { View } from "react-native-web";
 import {Ionicons} from '@expo/vector-icons';
-import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 function IconButton ({ icon, size, color, onPress }) { 
     return(

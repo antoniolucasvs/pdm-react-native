@@ -2,19 +2,25 @@ import { StatusBar } from 'expo-status-bar';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import DespesaRecente from './screens/DespesasRecentes';
 import TodasDespesas from './screens/TodasDespesas';
 import GerenciarDespesa from './screens/GerenciarDespesa';
 import { Ionicons } from '@expo/vector-icons';
+import IconButton from './components/iconButton';
 
 export default function App() {
   
   const Tab = createBottomTabNavigator();
 
   function BottonTabScreen() {
+    const navigation = useNavigation();
+
     return(
-      <Tab.Navigator>
+      <Tab.Navigator
+      screenOptions = {( {navigation} ) => ({ headerRight: () => <IconButton
+      icon = "add" size = {24} onPress={() => {navigation.navigate('GerenciarDespesa')}} /> })} >
+
         <Tab.Screen name = "DespesaRecentes" component={DespesaRecente}
             options={{tabBarIcon: ({color, size}) => (<Ionicons name = "hourglass"
                       size = {size} color = {color} />),
@@ -49,7 +55,7 @@ const styles = StyleSheet.create({ container: {
   flex: 1,
   backgroundColor: '#fff',
   alignItems: 'center',
-  justifyContent: 'Center',
+  justifyContent: 'center',
   },
 });
 
