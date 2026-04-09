@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DespesaRecente from './screens/DespesasRecentes';
 import TodasDespesas from './screens/TodasDespesas';
 import GerenciarDespesa from './screens/GerenciarDespesa';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function App() {
   
@@ -14,8 +15,20 @@ export default function App() {
   function BottonTabScreen() {
     return(
       <Tab.Navigator>
-        <Tab.Screen name = "DespesaRecentes" component={DespesaRecente} />
-        <Tab.Screen name = "TodasDespesas" component={TodasDespesas} />
+        <Tab.Screen name = "DespesaRecentes" component={DespesaRecente}
+            options={{tabBarIcon: ({color, size}) => (<Ionicons name = "hourglass"
+                      size = {size} color = {color} />),
+                      tabBarLabel: 'Recentes',
+                      title: 'Despesas Recentes',
+                      tabBarLabelStyle: {fontSize: 12} 
+                      }} />
+        <Tab.Screen name = "TodasDespesas" component={TodasDespesas} 
+            options={{tabBarIcon: ({color, size}) => (<Ionicons name = "wallet-outline"
+                      size = {size} color = {color} />),
+                      tabBarLabel: 'Todas',
+                      title: 'Todas as Despesas',
+                      tabBarLabelStyle: {fontSize: 12} 
+                      }} />
       </Tab.Navigator>
     )
   }
@@ -24,7 +37,8 @@ export default function App() {
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name = "Despesas" component = {BottonTabScreen} />
+        <Stack.Screen name = "Despesas" component = {BottonTabScreen} 
+            options={{headerShown:false}} />
         <Stack.Screen name = "GerenciarDespesa" component = {GerenciarDespesa} />
       </Stack.Navigator>
     </NavigationContainer>
