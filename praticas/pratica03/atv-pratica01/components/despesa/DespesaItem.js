@@ -17,7 +17,7 @@ function DespesaItem({item}) {
                     <Text>{item.descricao}</Text>
                 </View>
                 <View style = {styles.itemText}>
-                    <Text>R$ {item.valor}</Text>
+                    <Text>R$ - {item.valor}</Text>
                 </View>
             </View>
         </Pressable>
