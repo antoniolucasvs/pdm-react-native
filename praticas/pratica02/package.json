@@ -1,0 +1,11 @@
+{
+  "name": "gestao-financeira-workspace",
+  "version": "1.0.0",
+  "description": "Root workspace to start both frontend and backend",
+  "scripts": {
+    "install-all": "npm install --prefix gestao-financeira-api && npm install --prefix gestao-financeira",
+    "dev:backend": "npm run prisma:migrate --prefix gestao-financeira-api && npm run prisma:seed --prefix gestao-financeira-api && npm run dev --prefix gestao-financeira-api",
+    "dev:frontend": "npm start --prefix gestao-financeira",
+    "start": "npx --yes concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+  }
+}

@@ -1,24 +1,131 @@
-# 💻 Prática 02: Construindo a Interface da Lista de Tarefas
+# 🪙 Gestão Financeira - Entrega de Atividade
 
-Chegou a hora de dar uma "cara" ao nosso aplicativo! Nesta prática, vamos construir a **Interface Gráfica (UI)** do To-Do List. Ainda não teremos funcionalidades reais (como adicionar ou deletar), o objetivo hoje é apenas desenhar a tela usando os Componentes Core e o StyleSheet.
+Este repositório contém a entrega da atividade prática de Desenvolvimento de Dispositivos Móveis (PDM). O projeto consiste em um aplicativo de controle financeiro completo com **Frontend (React Native/Expo)** integrado a um **Backend (Node.js/Express/Prisma/PostgreSQL)**.
 
-## 🛠️ O que deve ser feito
+---
 
-1. **Siga o Fluxo:** Crie a Issue da Prática 02 no GitHub, depois crie a branch `feature/pratica02` no seu terminal.
-2. Limpe o arquivo `App.js` (ou `App.jsx`) removendo o "Hello World" da aula passada.
-3. Construa a seguinte estrutura visual:
-   * **Cabeçalho:** Um título grande e em negrito escrito "Minhas Tarefas".
-   * **Área de Inserção:** Um `<TextInput>` para digitar a tarefa e, ao lado dele, um botão (`<TouchableOpacity>`) com um ícone de `+` ou o texto "Add". Use Flexbox (`flexDirection: 'row'`) para deixá-los na mesma linha.
-   * **Lista de Tarefas (Estática):** Crie 2 ou 3 "cards" de tarefas fixos no código (hardcoded). Cada card deve ter um texto longo e um botão de lixeira (pode ser apenas um texto "X" por enquanto).
+## ⚡ Modo Rápido (Executar tudo com 1 clique)
 
-## 💡 Dicas de Estilização
-Abaixo está um "esqueleto" mental de como seu código deve se parecer. Tente usar essas propriedades no seu `StyleSheet`:
+Para facilitar a execução simultânea do Frontend e do Backend, disponibilizamos scripts automatizados na raiz da pasta de entrega:
 
-* Use `padding` na `View` principal para desgrudar os elementos das bordas do celular.
-* No `TextInput`, use `borderWidth`, `borderColor` e `borderRadius` para criar a caixa de texto.
-* Lembre-se: Para colocar o Input e o Botão lado a lado, coloque os dois dentro de uma `<View>` e aplique `flexDirection: 'row'` nessa View!
+*   **No Windows**: Dê dois cliques no arquivo `start.bat` (ou execute `./start.bat` no terminal).
+*   **No macOS / Linux**: Execute o comando `./start.sh` no terminal (lembre-se de dar permissão de execução com `chmod +x start.sh` se necessário).
 
-## ✅ Como Entregar
-1. Verifique se o layout ficou agradável no seu celular via Expo Go.
-2. Faça o commit: `git commit -m "Feat: Cria interface estatica do app de tarefas"`
-3. Faça o push para o GitHub e abra o seu **Pull Request** para correção!
+Esses scripts vão abrir duas janelas de terminal separadas, instalar as dependências de cada projeto, executar as migrações/seed do banco de dados (Prisma) e iniciar os servidores automaticamente.
+
+> [!WARNING]
+> **Configuração do `.env` Requerida Primeiro**:
+> Antes de executar o script rápido (`start.bat` ou `start.sh`), certifique-se de configurar o arquivo `.env` na pasta `gestao-financeira-api`!
+> 
+> 1. Copie o arquivo `gestao-financeira-api/.env.example` para `gestao-financeira-api/.env`.
+> 2. Abra o `.env` criado e configure a variável `DATABASE_URL` com as credenciais do seu banco PostgreSQL/MySQL local para que as migrações do Prisma funcionem corretamente.
+
+> [!NOTE]
+> **Alternativa caso o terminal/CMD do sistema esteja bloqueado por políticas do Windows**:
+> Se o arquivo `.bat` não abrir por restrições do sistema, você pode usar os comandos do Node.js diretamente pelo editor de código (VS Code, Cursor, etc.), que usa o terminal do próprio editor. Na raiz da pasta `EntregaAtvPdm`, execute:
+> 
+> 1. **Instalar todas as dependências**:
+>    ```bash
+>    npm run install-all
+>    ```
+> 2. **Iniciar o front e o back concorrentemente**:
+>    ```bash
+>    npm start
+>    ```
+> *(Essa alternativa utiliza o pacote `concurrently` interno para rodar ambas as aplicações na mesma aba do terminal).*
+
+---
+
+## 🚀 Como Executar o Projeto Manualmente
+
+Siga os passos abaixo caso prefira configurar e executar cada parte individualmente.
+
+### 💻 1. Configurando o Backend (`gestao-financeira-api`)
+
+O backend gerencia as transações e categorias no banco de dados.
+
+1. **Navegue até a pasta do backend**:
+   ```bash
+   cd gestao-financeira-api
+   ```
+
+2. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+3. **Configuração de Variáveis de Ambiente (`.env`)**:
+   * Copie o arquivo de exemplo `.env.example` para `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   * Abra o `.env` e configure a sua string de conexão `DATABASE_URL` do banco PostgreSQL.
+     *(Exemplo: `DATABASE_URL="postgresql://postgres:sua_senha@localhost:5432/gestao_financeira"`)*
+
+4. **Execute as Migrações do Banco de Dados**:
+   ```bash
+   npm run prisma:migrate
+   ```
+
+5. **Rode o Seed** (para criar as categorias padrão necessárias no app):
+   ```bash
+   npm run prisma:seed
+   ```
+
+6. **Inicie o servidor de desenvolvimento**:
+   ```bash
+   npm run dev
+   ```
+   *O servidor estará rodando em `http://localhost:3000`.*
+
+---
+
+### 📱 2. Configurando o Frontend (`gestao-financeira`)
+
+O frontend é um aplicativo móvel híbrido feito com **Expo Router**.
+
+1. **Abra um novo terminal e navegue até a pasta do frontend**:
+   ```bash
+   cd gestao-financeira
+   ```
+
+2. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+3. **Verifique a URL da API (Opcional)**:
+   * Em `services/api.js`, certifique-se de que a `BASE_URL` aponta para o endereço correto da sua API local (ex: `http://localhost:3000` para emuladores iOS/Web ou o IP da sua máquina para emuladores Android/Dispositivos Físicos).
+
+4. **Inicie o aplicativo com Expo**:
+   ```bash
+   npx expo start --clear
+   ```
+   *Pressione `w` no terminal para abrir no navegador web, ou escaneie o QR Code com o app **Expo Go** no celular.*
+
+---
+
+## 📬 3. Testando e Importando Rotas no Postman
+
+Para facilitar a correção, as rotas da API foram testadas e exportadas.
+
+1. **Collection do Postman**:
+   * O arquivo da collection está localizado em: `gestao-financeira-api/postman/collection.json`
+   * Importe-o no Postman através de: **File > Import** e selecione o arquivo.
+
+2. **Configuração de Variáveis de Ambiente no Postman**:
+   * Defina uma variável de ambiente chamada `baseUrl` apontando para `http://localhost:3000`.
+
+3. **Documentação de Rotas**:
+   * Para conferir os detalhes de cada endpoint, formato de requisição e respostas esperadas, leia o arquivo de documentação em: [gestao-financeira-api/POSTMAN.md](file:///c:/Users/NAYELE%20MOTA/Desktop/PdmEntrega/EntregaAtvPdm/gestao-financeira-api/POSTMAN.md).
+
+---
+
+## ✨ Funcionalidades Implementadas
+
+* **Login Persistente (Offline)**: Tela de login com validação local que armazena a sessão usando `AsyncStorage`.
+* **Saudação Personalizada**: Mensagem dinâmica com o nome do usuário autenticado no cabeçalho principal.
+* **Gráficos de Resumo (SVG)**: Gráfico de Rosca (`PieChart`) e Gráfico de Barras Horizontal (`BarChart`) ordenado por valor.
+* **Filtros por Período**: Seleção rápida de Mês/Ano nas telas de listagem e resumo financeiro.
+* **CRUD de Transações**: Suporta a edição e exclusão de transações ao fazer um toque longo nos itens.
+* **Categorias Customizadas**: Permite criar novas categorias dinamicamente além das 5 iniciais padrão.
